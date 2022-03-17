@@ -14,5 +14,8 @@ module.exports = app => {
   router.post('/login/updatepassword', controller.loginController.updatePassword) //修改用户密码
   router.post('/login/updateintroduction', controller.loginController.updateIntroduction) //修改个人简介
 
-  router.post('/people/upload', controller.pictureController.uploadAvatar) //上传图片
+  router.post('/people/upload', controller.pictureController.uploadAvatar) //上传头像
+  router.post('/upload_img',controller.pictureController.uploadImg) //上传图片
+  router.post('/create_question',controller.questionController.createQuestion) //新增问题
+  router.post('/get_question',controller.questionController.getQuestion) //获取问题
 };

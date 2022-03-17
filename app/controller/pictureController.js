@@ -12,10 +12,10 @@ class PictureController extends Controller {
     const stream = await ctx.getFileStream();
     //删除原头像
     //删除路径中的 'controller'
-    let pathArr = __dirname.split('\\');
-    pathArr.pop();
-    let imgPath = pathArr.join('/')
-    fs.unlinkSync(`${imgPath}/${stream.fields.avatar}`);
+    // let pathArr = __dirname.split('\\');
+    // pathArr.pop();
+    // let imgPath = pathArr.join('/')
+    // fs.unlinkSync(`${imgPath}/${stream.fields.avatar}`);
     //要传的参数对象
     const userdata = {};
     userdata.phone = stream.fields.phone;
@@ -40,6 +40,32 @@ class PictureController extends Controller {
     // ctx.body = {
     //   url: '/public/' + filename
     // };
+  }
+
+  //上传图片
+  async uploadImg(){
+    const ctx = this.ctx;
+    const stream = await ctx.getFileStream();
+    //要传的参数对象
+    const paramData = {};
+    //新建一个文件名
+    const filename = md5(stream.filename)+new Date().getTime()+ path
+      .extname(stream.filename)
+      .toLocaleLowerCase();
+    //文件路径
+    const target = path.join(this.config.baseDir, 'app/public/img', filename);
+    const writeStream = fs.createWriteStream(target);
+    try {
+      //异步把文件流 写入
+      await awaitWriteStream(stream.pipe(writeStream));
+    } catch (err) {
+      //如果出现错误，关闭管道
+      await sendToWormhole(stream);
+      throw err;
+    }
+    paramData.path = 'public/img/' + filename;
+    //文件响应
+    ctx.body = await ctx.service.pictureService.uploadImg(paramData)
   }
 }
 module.exports = PictureController;

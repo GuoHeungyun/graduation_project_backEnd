@@ -9,5 +9,15 @@ class PictureService extends Service {
     await this.app.model.query(queryStr);
     return userdata.path;
   }
+
+  //上传图片
+  async uploadImg(paramData){
+    return {
+      "errno":0,
+      "data":[
+        `http://127.0.0.1:7001/${paramData.path}`,
+      ]
+    }
+  }
 }
 module.exports = PictureService;
