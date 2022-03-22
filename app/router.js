@@ -18,4 +18,7 @@ module.exports = app => {
   router.post('/upload_img',controller.pictureController.uploadImg) //上传图片
   router.post('/create_question',controller.questionController.createQuestion) //新增问题
   router.post('/get_question',controller.questionController.getQuestion) //获取问题
+
+  router.post('/create_answer',controller.answerController.createAnswer) //新增回答
+  router.post('/get_answer',controller.answerController.getAnswer) //新增回答
 };

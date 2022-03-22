@@ -11,6 +11,9 @@ class LoginService extends Service {
       queryStr = `select * from users where phone = ${data.phone} and username = '${data.username}'`
     }
     const user = await this.app.model.query(queryStr);
+    if(!user[0][0].user_avatar){
+      user[0][0].user_avatar = 'public/defaultAvatar/defaultAvatar.png'
+    }
     return {
       user
     };
