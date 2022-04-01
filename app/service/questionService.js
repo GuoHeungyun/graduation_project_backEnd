@@ -11,7 +11,6 @@ class QuestionService extends Service {
 
   //获取问题
   async getQuestion(questionId){
-    console.log('questionId', questionId);
     let queryStr = '';  //第一句sql
     let queryStr2 = ''; //第二句sql
     let questionList = [];  //问题列表
@@ -19,7 +18,6 @@ class QuestionService extends Service {
 
     //如果传参里面有id，按照id查询问题(暂时弃用)
     if (Object.getOwnPropertyNames(questionId).length){
-      console.log('有id');
       queryStr = `
           SELECT users.user_id,
                  users.username,
@@ -38,7 +36,6 @@ class QuestionService extends Service {
         FROM users join questions ON users.user_id = questions.creatorId`
     }
     question = await this.app.model.query(queryStr);  //问题集合
-    console.log(question);
     //每个问题添加回答数
     return new Promise((resolve, reject) =>{
       for(let i = 0; i< question[0].length; i++){
@@ -49,7 +46,6 @@ class QuestionService extends Service {
           question[0][i].answerNumber = data[0][0].number
           questionList.push(question[0][i]);
           if (i+1 === question[0].length){
-            console.log('返回值');
             resolve(questionList)
           }
         })

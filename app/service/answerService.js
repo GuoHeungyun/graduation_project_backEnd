@@ -4,7 +4,6 @@ class AnswerService extends Service {
 
   //新增回答
   async createAnswer(params){
-    console.log(params);
     let queryStr = `insert into answers (content, excerpt, creatorId, type, targetId)
         values ('${params.content}', '${params.excerpt}', '${params.creatorId}','2','${params.targetId}')`
     const answer = await this.app.model.query(queryStr);
@@ -41,7 +40,6 @@ class AnswerService extends Service {
       const answer = await this.app.model.query(queryStr);
       return answer[0]
     }else{  //否则按id查询
-      console.log(params);
       queryStr = `SELECT users.user_id, users.username, users.user_avatar, users.introduction, answers.answer_id, answers.content,answers.excerpt, answers.creatorId, answers.updatedAt, answers.targetId 
 FROM users join answers
 ON users.user_id = answers.creatorId

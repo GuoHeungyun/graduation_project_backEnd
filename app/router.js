@@ -21,4 +21,6 @@ module.exports = app => {
 
   router.post('/create_answer',controller.answerController.createAnswer) //新增回答
   router.post('/get_answer',controller.answerController.getAnswer) //新增回答
+
+  router.post('/create_comment',controller.commentController.createComment)
 };
